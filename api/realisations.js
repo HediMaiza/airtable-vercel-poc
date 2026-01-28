@@ -23,8 +23,8 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Config serveur manquante' });
   }
 
-  const url = `https://api.airtable.com/v0/${appEvuzzR373ugQt7}/${encodeURIComponent(
-    tblmmkU4stQO1bc19
+  const url = `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(
+    tableName
   )}?maxRecords=100&sort[0][field]=Titre&sort[0][direction]=asc`;
 
   try {
