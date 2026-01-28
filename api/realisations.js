@@ -44,10 +44,10 @@ export default async function handler(req, res) {
 
     // On mappe les données pour n’exposer que ce qui t’intéresse
     const projets = (data.records || []).map((record) => {
-      // Extraire l'URL de la première image si c'est un champ Attachment
+      // Extraire l'URL de la première image du champ Attachment "Images"
       let imageUrl = '';
-      if (record.fields.ImageUrl && Array.isArray(record.fields.ImageUrl) && record.fields.ImageUrl.length > 0) {
-        imageUrl = record.fields.ImageUrl[0].url || '';
+      if (record.fields.Images && Array.isArray(record.fields.Images) && record.fields.Images.length > 0) {
+        imageUrl = record.fields.Images[0].url || '';
       }
     
       return {
