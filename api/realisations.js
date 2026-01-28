@@ -43,12 +43,20 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     // On mappe les données pour n’exposer que ce qui t’intéresse
-    const projets = (data.records || []).map((record) => ({
-      id: record.id,
-      titre: record.fields.Titre || '',
-      description: record.fields.Description || '',
-      imageUrl: record.fields.ImageUrl || ''
-    }));
+    const projets = (data.records || []).map((record) => {
+      // Extraire l'URL de la première image si c'est un champ Attachment
+      let imageUrl = '';
+      if (record.fields.ImageUrl && Array.isArray(record.fields.ImageUrl) && record.fields.ImageUrl.length > 0) {
+        imageUrl = record.fields.ImageUrl[0].url || '';
+      }
+    
+      return {
+        id: record.id,
+        titre: record.fields.Titre || '',
+        description: record.fields.Description || '',
+        imageUrl: imageUrl
+      };
+    });
 
     return res.status(200).json(projets);
   } catch (err) {
