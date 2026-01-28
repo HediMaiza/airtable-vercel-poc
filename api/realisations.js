@@ -1,13 +1,12 @@
 // api/realisations.js
 
 export default async function handler(req, res) {
-  // CORS pour autoriser ton domaine (pour le POC, on peut ouvrir à tous)
+  // CORS - autoriser tous les domaines
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') {
-    // Réponse au préflight CORS
     return res.status(200).end();
   }
 
