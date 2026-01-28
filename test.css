@@ -20,6 +20,10 @@ h1 {
   font-size: 2rem;
 }
 
+.hero {
+  margin: 4rem auto;
+}
+
 #projects {
   margin-top: 4rem;
   display: grid;
