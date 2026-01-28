@@ -2,7 +2,8 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <title>POC first enseigne clients</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réalisations clients - POC</title>
     <link rel="stylesheet" href="test.css" />
   </head>
   <body>
@@ -10,24 +11,29 @@
     <div id="projects"></div>
 
     <script>
+      // ⚠️ REMPLACE par ton URL Vercel réelle
       const API_URL = 'https://airtable-vercel-czbekk52o-hedis-projects-849f29af.vercel.app/api/realisations';
 
       async function loadProjects() {
+        const container = document.getElementById('projects');
+        container.innerHTML = '<p>Chargement...</p>';
         try {
           const response = await fetch(API_URL);
           if (!response.ok) {
             throw new Error('Erreur API: ' + response.status);
           }
           const projets = await response.json();
-          const container = document.getElementById('projects');
           container.innerHTML = '';
 
-          if (!projets.length) {
-            container.textContent = 'Aucune réalisation pour le moment.';
+          // Filtre les projets vides (sans titre)
+          const projetsRemplis = projets.filter(p => p.titre && p.titre.trim() !== '');
+
+          if (!projetsRemplis.length) {
+            container.innerHTML = '<p>Aucune réalisation pour le moment.</p>';
             return;
           }
 
-          projets.forEach((p) => {
+          projetsRemplis.forEach((p) => {
             const article = document.createElement('article');
             article.className = 'project';
 
@@ -35,9 +41,9 @@
               <h2>${p.titre}</h2>
               <p>${p.description}</p>
               ${
-                p.imageUrl
+                p.imageUrl && p.imageUrl.trim() !== ''
                   ? `<img src="${p.imageUrl}" alt="${p.titre}" loading="lazy" />`
-                  : ''
+                  : '<div class="no-image">Pas d\'image</div>'
               }
             `;
 
@@ -45,11 +51,9 @@
           });
         } catch (err) {
           console.error(err);
-          const container = document.getElementById('projects');
-          container.textContent = "Erreur lors du chargement des réalisations.";
+          container.innerHTML = '<p style="color: red;">❌ Erreur lors du chargement des réalisations.</p>';
         }
       }
-
       loadProjects();
     </script>
   </body>
