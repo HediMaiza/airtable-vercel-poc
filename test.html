@@ -4,29 +4,56 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réalisations clients - POC</title>
-    <link rel="stylesheet" href="test.css?v=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="stylesheet" href="test.css?v=2" />
   </head>
   <body>
-      <section class="block hero">
-        <h1>First Enseigne, FABRICANT D’ENSEIGNES PUBLICITAIRE</h1>
-        <p>FIRST ENSEIGNE est une boutique en ligne d'enseignes publicitaires économiques mais de haute qualité. Nous sommes la marque préférée des professionnels car nous nous occupons de la gestion, de la fabrication et de l'expédition de tous nos produits.</p>
-    </section>
-    <h2>Nos réalisations clients</h2>
 
-    <div id="projects"></div>
+    <nav class="navbar mt-4 navbar-transparency px-5 py-3" role="navigation">
+        <div class="navbar-brand mr-5">
+            <a href="#">
+                <img src="https://picsum.photos/id/10/30/30?greyscale" alt="">
+            </a>
+        </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a href="#" class="button is-primary">
+                        Réserver un rdv gratuit <i class="bi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="container" role="main">
+        <section class="block section content">
+            <h1 class="title is-1 has-text-centered is-1 is-spaced">First Enseigne, fabricant d'enseigne publicitaire</h1>
+            <p>FIRST ENSEIGNE est une boutique en ligne d'enseignes publicitaires économiques mais de haute qualité. Nous sommes la marque préférée des professionnels car nous nous occupons de la gestion, de la fabrication et de l'expédition de tous nos produits.</p>
+        </section>
+        <section class="block content">
+            <h2 class="title is-2 has-text-centered">Ils nous font confiance</h2>
+            <img src="https://picsum.photos/id/11/200/200/" alt="">
+            <img src="https://picsum.photos/id/12/200/200/" alt="">
+            <img src="https://picsum.photos/id/13/200/200/" alt="">
+            <img src="https://picsum.photos/id/14/200/200/" alt="">
+        </section>
+        <section class="block content">
+            <h2 class="title is-2 has-text-centered">Nos réalisations clients</h2>
+        </section>
+        
+        <div id="projects"></div>
 
-    <h2>Contactez-nous</h2>
-    <section class="block">
-        <p>contact@firstenseigne.fr</p>
-    </section>
-
+        <section class="block content">
+            <h2 class="title is-2 has-text-centered">Contactez-nous</h2>
+            <p>contact@firstenseigne.fr</p>
+        </section>
+    </main>
 
     <footer class="footer has-background-inherit" role="contentinfo">
         First enseigne - @copyright 2026 - contact@firstenseigne.fr
     </footer>
 
     <script>
-      // ⚠️ REMPLACE par ton URL Vercel réelle
       const API_URL = 'https://airtable-vercel-poc-git-main-hedis-projects-849f29af.vercel.app/api/realisations';
 
       async function loadProjects() {
@@ -42,7 +69,6 @@
 
           // Filtre les projets vides (sans titre)
           const projetsRemplis = projets.filter(p => p.titre && p.titre.trim() !== '');
-
           if (!projetsRemplis.length) {
             container.innerHTML = '<p>Aucune réalisation pour le moment.</p>';
             return;
@@ -50,14 +76,14 @@
 
           projetsRemplis.forEach((p) => {
             const article = document.createElement('article');
-            article.className = 'project';
+            article.className = 'box is-medium';
 
             article.innerHTML = `
-              <h2>${p.titre}</h2>
+              <h2 class="title">${p.titre}</h2>
               <p>${p.description}</p>
               ${
                 p.imageUrl && p.imageUrl.trim() !== ''
-                  ? `<img src="${p.imageUrl}" alt="${p.titre}" loading="lazy" />`
+                  ? `<img src="${p.imageUrl}" alt="" loading="lazy" />`
                   : '<div class="no-image">Pas d\'image</div>'
               }
             `;
