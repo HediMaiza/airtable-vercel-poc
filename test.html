@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>POC first enseigne clients</title>
+    <link rel="stylesheet" href="test.css" />
+  </head>
+  <body>
+    <h1>Réalisations clients</h1>
+    <div id="projects"></div>
+
+    <script>
+      const API_URL = 'https://TON-PROJET.vercel.app/api/realisations';
+
+      async function loadProjects() {
+        try {
+          const response = await fetch(API_URL);
+          if (!response.ok) {
+            throw new Error('Erreur API: ' + response.status);
+          }
+          const projets = await response.json();
+          const container = document.getElementById('projects');
+          container.innerHTML = '';
+
+          if (!projets.length) {
+            container.textContent = 'Aucune réalisation pour le moment.';
+            return;
+          }
+
+          projets.forEach((p) => {
+            const article = document.createElement('article');
+            article.className = 'project';
+
+            article.innerHTML = `
+              <h2>${p.titre}</h2>
+              <p>${p.description}</p>
+              ${
+                p.imageUrl
+                  ? `<img src="${p.imageUrl}" alt="${p.titre}" loading="lazy" />`
+                  : ''
+              }
+            `;
+
+            container.appendChild(article);
+          });
+        } catch (err) {
+          console.error(err);
+          const container = document.getElementById('projects');
+          container.textContent = "Erreur lors du chargement des réalisations.";
+        }
+      }
+
+      loadProjects();
+    </script>
+  </body>
+</html>
