@@ -15,6 +15,11 @@ body {
   text-align: center;
 }
 
+.box .title {
+  color: #333;
+  text-align: center;
+}
+
 .hero {
   margin: 4rem auto;
 }
